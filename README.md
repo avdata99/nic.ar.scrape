@@ -8,3 +8,8 @@ Uso
 python nicarscrape dominioabuscar
 
 Solo busca por ahora dominio .com.ar
+
+
+Basado en el repo
+https://github.com/gonzafirewall/PycNic
+Del usuario GIT @gonzafirewall
