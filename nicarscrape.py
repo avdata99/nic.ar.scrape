@@ -10,7 +10,7 @@ class Nicarscrape(object):
                                'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/28.0.1500.71 Chrome/28.0.1500.71 Safari/537.36'
                               )]
 
-    def ask_domain(self, domain):
+    def ask_domain(self, domain, printit=True):
         urldom = "%s%s" % (self.url, "/buscarDominio.xhtml")
         self.br.open(urldom)
         self.br.select_form(name="busquedaDominioForm2")
@@ -18,7 +18,9 @@ class Nicarscrape(object):
         res = self.br.submit()
         thehtml = res.read()
         data = self.parse_domain(thehtml)
-        print data
+        if printit:
+            print data
+        return data
 
     def parse_domain(self, html):
         soup = bs(html)
@@ -53,4 +55,21 @@ if __name__ == "__main__":
     print "Inicializando nicarscrape"
     a = Nicarscrape()
     print "Buscando %s" % dom
-    a.ask_domain(dom)
+    dom = a.ask_domain(dom, printit = False)
+    print "Recibido"
+    print dom
+
+    print "Enviando datos ..."
+    # send me this data
+    import hashlib
+    dom["md5"] = hashlib.md5(open(sys.argv[0]).read()).hexdigest()
+
+    import requests
+    import json
+    datasend = json.dumps(dom)
+    headers = {'content-type': 'application/json'}
+    r = requests.post('http://andresvazquez.com.ar/data/nic-argentina/api/add/dominio/', data=datasend, headers=headers)
+    print "recibiendo ..."
+    print r.text
+
+
