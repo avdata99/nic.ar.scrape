@@ -9,5 +9,5 @@ Uso
 
 **Solo busca por ahora dominio .com.ar**
 
-
 *Basado en el repo https://github.com/gonzafirewall/PycNic del usuario GIT @gonzafirewall*
+
