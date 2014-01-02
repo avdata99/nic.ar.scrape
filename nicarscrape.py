@@ -1,6 +1,6 @@
 from mechanize import Browser
 from bs4 import BeautifulSoup as bs
-import re, sys
+import re
 
 class Nicarscrape(object):
     def __init__(self):
@@ -43,11 +43,14 @@ class Nicarscrape(object):
             div.span.extract()
             dominio[campo.string.strip()] = div.string.strip()
 
+        dominio["result"] = True
         return dominio
 
 
-
-a = Nicarscrape()
-dom = sys.argv[1]
-print "Buscando %s" % dom
-a.ask_domain(dom)
+if __name__ == "__main__":
+    import sys
+    dom = sys.argv[1]
+    print "Inicializando nicarscrape"
+    a = Nicarscrape()
+    print "Buscando %s" % dom
+    a.ask_domain(dom)
