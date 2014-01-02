@@ -1,5 +1,8 @@
 *.py[cod]
 
+*.nja
+ni.ar.scrape.nja
+
 # C extensions
 *.so
 
@@ -35,5 +38,3 @@ nosetests.xml
 .project
 .pydevproject
 
-*.nja
-ni.ar.scrape.nja
