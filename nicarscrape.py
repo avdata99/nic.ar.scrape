@@ -1,7 +1,6 @@
 from mechanize import Browser
 from bs4 import BeautifulSoup as bs
-import re
-import sys
+import re, sys
 
 class Nicarscrape(object):
     def __init__(self):
@@ -23,9 +22,15 @@ class Nicarscrape(object):
 
     def parse_domain(self, html):
         soup = bs(html)
-        vacio = soup.find(text=re.compile('El dominio se encuentra disponible'))
-        if vacio:
+        # print (soup.prettify('latin-1'))
+
+        disponible = soup.find(text=re.compile('El dominio se encuentra disponible'))
+        if disponible:
             return {'result': False, 'error': 'No se encontraron datos'}
+
+        invalido = soup.find(text=re.compile('El nombre de dominio que ingresaste no es '))
+        if invalido:
+            return {'result': False, 'error': 'Dominio invalido'}
 
         table = soup.find('tbody', {'id': 'dominioNoDisponibleForm:j_idt60_data'})
         trs = table.find_all('tr')
@@ -36,7 +41,7 @@ class Nicarscrape(object):
             campo = div.find('span')
             # I need to remove for reading following text
             div.span.extract()
-            dominio[campo.string] = div.string
+            dominio[campo.string.strip()] = div.string.strip()
 
         return dominio
 
