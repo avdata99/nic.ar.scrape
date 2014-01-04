@@ -13,6 +13,9 @@ o
 
 para buscar en NIC y no enviar datos a nuestro servidor
 
+La primera opción colabora con los datos recolectados para el proyecto
+	http://andresvazquez.com.ar/data/nic-argentina
+
 **Solo busca por ahora dominio .com.ar**
 
 *Basado en el repo https://github.com/gonzafirewall/PycNic del usuario GIT @gonzafirewall*
