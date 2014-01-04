@@ -28,11 +28,11 @@ class Nicarscrape(object):
 
         disponible = soup.find(text=re.compile('El dominio se encuentra disponible'))
         if disponible:
-            return {'result': False, 'cerror': 'AVAILABLE', 'error': 'No se encontraron datos'}
+            return {'dominio': domain, 'result': False, 'cerror': 'AVAILABLE', 'error': 'No se encontraron datos'}
 
         invalido = soup.find(text=re.compile('El nombre de dominio que ingresaste no es '))
         if invalido:
-            return {'result': False, 'cerror':'INVALID' , 'error': 'Dominio invalido'}
+            return {'dominio': domain, 'result': False, 'cerror':'INVALID' , 'error': 'Dominio invalido'}
 
         table = soup.find('tbody', {'id': 'dominioNoDisponibleForm:j_idt60_data'})
         trs = table.find_all('tr')
@@ -69,8 +69,9 @@ if __name__ == "__main__":
     import json
     datasend = json.dumps(dom)
     headers = {'content-type': 'application/json'}
-    r = requests.post('http://localhost/dev/andres/andresvazquez.com.ar/data/nic-argentina/api/add/dominio/', data=datasend, headers=headers)
     print "recibiendo ..."
-    print r.text
+    r = requests.post('http://andresvazquez.com.ar/data/nic-argentina/api/add/dominio/', data=datasend, headers=headers)
+
+    print "Info enviada, gracias por colaborar" # r.text
 
 
