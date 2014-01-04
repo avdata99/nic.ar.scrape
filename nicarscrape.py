@@ -17,22 +17,22 @@ class Nicarscrape(object):
         self.br['busquedaDominioForm2:dominio'] = domain
         res = self.br.submit()
         thehtml = res.read()
-        data = self.parse_domain(thehtml)
+        data = self.parse_domain(domain, thehtml)
         if printit:
             print data
         return data
 
-    def parse_domain(self, html):
+    def parse_domain(self, domain, html):
         soup = bs(html)
         # print (soup.prettify('latin-1'))
 
         disponible = soup.find(text=re.compile('El dominio se encuentra disponible'))
         if disponible:
-            return {'result': False, 'error': 'No se encontraron datos'}
+            return {'result': False, 'cerror': 'AVAILABLE', 'error': 'No se encontraron datos'}
 
         invalido = soup.find(text=re.compile('El nombre de dominio que ingresaste no es '))
         if invalido:
-            return {'result': False, 'error': 'Dominio invalido'}
+            return {'result': False, 'cerror':'INVALID' , 'error': 'Dominio invalido'}
 
         table = soup.find('tbody', {'id': 'dominioNoDisponibleForm:j_idt60_data'})
         trs = table.find_all('tr')
@@ -45,6 +45,7 @@ class Nicarscrape(object):
             div.span.extract()
             dominio[campo.string.strip()] = div.string.strip()
 
+        dominio["dominio"] = domain
         dominio["result"] = True
         return dominio
 
@@ -68,7 +69,7 @@ if __name__ == "__main__":
     import json
     datasend = json.dumps(dom)
     headers = {'content-type': 'application/json'}
-    r = requests.post('http://andresvazquez.com.ar/data/nic-argentina/api/add/dominio/', data=datasend, headers=headers)
+    r = requests.post('http://localhost/dev/andres/andresvazquez.com.ar/data/nic-argentina/api/add/dominio/', data=datasend, headers=headers)
     print "recibiendo ..."
     print r.text
 
