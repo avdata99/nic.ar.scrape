@@ -60,6 +60,11 @@ if __name__ == "__main__":
     print "Recibido"
     print dom
 
+    if len(sys.argv) > 2:
+        if sys.argv[2] == "nosend":
+            print ""
+            sys.exit()
+
     print "Enviando datos ..."
     # send me this data
     import hashlib
