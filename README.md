@@ -13,7 +13,7 @@ o
 
 para enviar los datos del scrape via json-post a tu servidor
 
-La primera opción colabora con los datos recolectados para el proyecto
+Mas info en 
 	http://andresvazquez.com.ar/data/nic-argentina
 
 **Solo busca por ahora dominio .com.ar**
