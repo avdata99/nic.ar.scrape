@@ -1,6 +1,10 @@
+# -*- coding: utf-8 -*-
 from mechanize import Browser
 from bs4 import BeautifulSoup as bs
 import re
+import ConfigParser
+import os
+
 
 class Nicarscrape(object):
     def __init__(self):
@@ -8,7 +12,12 @@ class Nicarscrape(object):
         self.br = Browser()
         self.br.addheaders = [('user-agent',
                                'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/28.0.1500.71 Chrome/28.0.1500.71 Safari/537.36'
-                              )]
+                              ),
+                            ('Accept-Charset', 'ISO-8859-1,utf-8;q=0.7,*;q=0.3')]
+        self.Config = ConfigParser.ConfigParser()
+        here = os.path.dirname(os.path.abspath(__file__))
+        self.Config.read(os.path.join(here, "config.ini"))
+
 
     def ask_domain(self, domain, printit=True):
         urldom = "%s%s" % (self.url, "/buscarDominio.xhtml")
@@ -54,29 +63,32 @@ if __name__ == "__main__":
     import sys
     dom = sys.argv[1]
     print "Inicializando nicarscrape"
-    a = Nicarscrape()
+    nic = Nicarscrape()
     print "Buscando %s" % dom
-    dom = a.ask_domain(dom, printit = False)
+    dom = nic.ask_domain(dom, printit = False)
     print "Recibido"
     print dom
 
-    if len(sys.argv) > 2:
-        if sys.argv[2] == "nosend":
-            print ""
-            sys.exit()
+    if len(sys.argv) == 2:
+        print "Terminado"
+        sys.exit()
 
-    print "Enviando datos ..."
-    # send me this data
-    import hashlib
-    dom["md5"] = hashlib.md5(open(sys.argv[0]).read()).hexdigest()
+    # maybe you want to send this to your server (define it your config.ini)
+    if sys.argv[2] == "send":
+        print "Enviando datos ..."
+        # send this data (via config.ini)
+        import hashlib
+        # solo para asegurate que version de tu script lo envia
+        dom["md5"] = hashlib.md5(open(sys.argv[0]).read()).hexdigest()
 
-    import requests
-    import json
-    datasend = json.dumps(dom)
-    headers = {'content-type': 'application/json'}
-    print "recibiendo ..."
-    r = requests.post('http://andresvazquez.com.ar/data/nic-argentina/api/add/dominio/', data=datasend, headers=headers)
+        import requests
+        import json
+        datasend = json.dumps(dom)
+        headers = {'content-type': 'application/json'}
+        print "recibiendo ..."
+        r = requests.post(nic.Config.get("servers", "postDomainsTo"), data=datasend, headers=headers)
 
-    print "Info enviada, gracias por colaborar" # r.text
+        print "Info enviada, gracias por colaborar"
+        print r.text
 
 

@@ -2,6 +2,8 @@
 
 *.nja
 ni.ar.scrape.nja
+bulk.py
+config.ini
 
 # C extensions
 *.so

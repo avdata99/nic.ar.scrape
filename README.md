@@ -9,9 +9,9 @@ Uso
 
 o
 
-	python nicarscrape.py dominioabuscar nosend
+	python nicarscrape.py dominioabuscar send
 
-para buscar en NIC y no enviar datos a nuestro servidor
+para enviar los datos del scrape via json-post a tu servidor
 
 La primera opción colabora con los datos recolectados para el proyecto
 	http://andresvazquez.com.ar/data/nic-argentina
