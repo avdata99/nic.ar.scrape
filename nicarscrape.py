@@ -89,6 +89,6 @@ if __name__ == "__main__":
         r = requests.post(nic.Config.get("servers", "postDomainsTo"), data=datasend, headers=headers)
 
         print "Info enviada, gracias por colaborar"
-        print r.text
+        #print unicode(r.text)
 
 
