@@ -2,5 +2,5 @@
 # if you want to colaborate on my database write to me at andres@data99.com.ar
 [servers]
 readDomainsFrom: http://tudominio.com/getToScrape/cantidad/%s
-postDomainsTo: http://tudominio.com/add/dominio/
+postDomainsTo: http://tudominio.com/add-dominio/
 scraperFolder: /home/you/py.nic.ar.scrape/

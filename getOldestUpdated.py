@@ -21,7 +21,9 @@ if len(sys.argv) > 0:
 url = Config.get("servers", 'readDomainsFrom')
 url = url % tot
 print url
-data = json.load(urllib2.urlopen(url))
+response=urllib2.urlopen(url)
+print response
+data = json.load(response)
 
 print "ENCONTRADO \n"
 print data
@@ -39,11 +41,9 @@ for f in data["result"]:
 
     cmd = "python %snicarscrape.py %s send" % (Config.get("servers", "scraperFolder"), dom)
     cmd = unicode(cmd)
-    print cmd
     test = os.system(cmd)
 
     print "\nprocesando %i de %s" % (c, tot)
     if c < int(tot):
-        r = randint(38, 49)
-        print "\n ---- %s ---- \n" % r
+        r = randint(2, 9)
         time.sleep(r)
